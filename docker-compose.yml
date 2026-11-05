@@ -1,0 +1,19 @@
+services:
+  app:
+    build: .
+    ports: ["3000:3000"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://feelfreedoc:feelfreedoc@db:5432/feelfreedoc
+    depends_on: [db]
+    restart: unless-stopped
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: feelfreedoc
+      POSTGRES_PASSWORD: feelfreedoc
+      POSTGRES_DB: feelfreedoc
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    restart: unless-stopped
+volumes:
+  pgdata:

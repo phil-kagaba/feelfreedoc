@@ -1,0 +1,169 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #fafafa;
+  --ink: #171717;
+  --muted: #737373;
+  --line: #eaeaea;
+  --brand: #a3e4b0;
+  --brand-soft: #ddf5e2;
+  --brand-strong: #7fd492;
+  --brand-ink: #1f7a3d;
+  --danger: #dc2626;
+  --danger-soft: #fef2f2;
+  --warn-soft: #fffbeb;
+  --shadow: 0 1px 2px rgba(23, 23, 23, 0.04), 0 4px 16px rgba(23, 23, 23, 0.05);
+  --shadow-lg: 0 2px 6px rgba(23, 23, 23, 0.05), 0 18px 40px rgba(23, 23, 23, 0.08);
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0b0f0c;
+  --surface: #111612;
+  --surface-2: #151b17;
+  --ink: #ededed;
+  --muted: #a3a3a3;
+  --line: #24302a;
+  --brand: #a3e4b0;
+  --brand-soft: #173022;
+  --brand-strong: #8bdc9d;
+  --brand-ink: #a3e4b0;
+  --danger: #f87171;
+  --danger-soft: #2a1414;
+  --warn-soft: #2a2310;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.35), 0 18px 40px rgba(0, 0, 0, 0.35);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-ink: var(--brand-ink);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-warn-soft: var(--warn-soft);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --shadow-soft: var(--shadow);
+  --shadow-lift: var(--shadow-lg);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: var(--brand);
+  color: #171717;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-ink);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@utility container-page {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+@utility btn {
+  @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 select-none disabled:cursor-not-allowed disabled:opacity-50;
+}
+@utility btn-primary {
+  @apply btn bg-brand text-[#171717] shadow-soft hover:bg-brand-strong hover:shadow-lift active:scale-[0.98];
+}
+@utility btn-dark {
+  @apply btn bg-ink text-bg hover:opacity-90 active:scale-[0.98];
+}
+@utility btn-ghost {
+  @apply btn border border-line bg-surface text-ink hover:border-brand-strong hover:bg-brand-soft;
+}
+@utility btn-danger {
+  @apply btn border border-line bg-surface text-danger hover:bg-danger-soft;
+}
+@utility card {
+  @apply rounded-2xl border border-line bg-surface shadow-soft;
+}
+@utility input {
+  @apply min-h-11 w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-sm text-ink outline-none transition placeholder:text-muted focus:border-brand-strong focus:ring-4 focus:ring-brand/30;
+}
+@utility label {
+  @apply mb-1.5 block text-sm font-medium text-ink;
+}
+@utility chip {
+  @apply inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1.5 text-sm font-medium text-muted transition hover:border-brand-strong hover:text-ink disabled:opacity-50;
+}
+@utility chip-active {
+  @apply border-brand-strong bg-brand-soft text-ink;
+}
+@utility prose-ffd {
+  & h2 {
+    @apply mt-10 mb-3 text-xl font-semibold text-ink;
+  }
+  & h3 {
+    @apply mt-6 mb-2 text-base font-semibold text-ink;
+  }
+  & p,
+  & li {
+    @apply text-[15px] leading-7 text-muted;
+  }
+  & ul {
+    @apply my-3 list-disc space-y-1 pl-5;
+  }
+  & a {
+    @apply font-medium text-brand-ink underline underline-offset-2;
+  }
+}
+
+.bg-hero {
+  background:
+    radial-gradient(60% 50% at 50% 0%, color-mix(in srgb, var(--brand) 35%, transparent) 0%, transparent 70%),
+    radial-gradient(40% 40% at 90% 20%, color-mix(in srgb, var(--brand-soft) 80%, transparent) 0%, transparent 70%),
+    var(--bg);
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--line) 70%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--line) 70%, transparent) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+
+.checker {
+  background-image: linear-gradient(45deg, var(--surface-2) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--surface-2) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--surface-2) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--surface-2) 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
