@@ -15,6 +15,10 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
+# NEXT_PUBLIC_* values are baked into the build; hosts like Railway pass service variables in as build args.
+ARG NEXT_PUBLIC_SITE_URL
+ARG NEXT_PUBLIC_MAX_UPLOAD_MB=50
+ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL NEXT_PUBLIC_MAX_UPLOAD_MB=$NEXT_PUBLIC_MAX_UPLOAD_MB
 RUN npm run build && npm prune --omit=dev
 
 FROM base AS run
@@ -24,4 +28,4 @@ RUN useradd --create-home --uid 1001 app && mkdir -p /app/.data && chown app /ap
 COPY --from=build --chown=app /app /app
 USER app
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["npm", "start", "--", "-H", "0.0.0.0"]
